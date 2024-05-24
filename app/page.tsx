@@ -1,14 +1,20 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { BugAntIcon } from "@heroicons/react/24/outline";
+import { BugAntIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { handleForm } from "./actions";
 import FormButton from "@/components/form-button";
 import FormInput from "@/components/form-input";
-import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
+import { PASSWORD_MIN_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/constants";
+import { useState } from "react";
 
 export default function Home() {
   const [state, action] = useFormState(handleForm, null);
+  const [buttonClicked, setButtonClicked] = useState(false);
+
+  const handleClick = () => {
+    setButtonClicked(true);
+  };
   return (
     <main className='min-h-screen w-screen flex flex-col items-center justify-center'>
       <div className='min-w-1/6 flex flex-col items-center justify-center shadow-md rounded-lg border-neutral-200 border p-10'>
@@ -31,6 +37,7 @@ export default function Home() {
             required
             placeholder='Enter your username'
             errors={state?.fieldErrors.username}
+            minLength={USERNAME_MIN_LENGTH}
           />
           <FormInput
             type='password'
@@ -42,17 +49,13 @@ export default function Home() {
             errors={state?.fieldErrors.password}
             minLength={PASSWORD_MIN_LENGTH}
           />
-          <FormButton title='Log in' />
-          {/* {!state?.show &&
-            state?.messages.map((message, i) => (
-              <div
-                key={i}
-                className='text-sm bg-green-500 rounded-xl p-3 flex flex-row justify-center items-center gap-2'
-              >
-                <CheckCircleIcon className='h-6 w-6 text-white font-bold' />
-                <div className='text-white font-bold'>{message}</div>
-              </div>
-            ))} */}
+          <FormButton title='Log in' onClick={handleClick} />
+          {buttonClicked && !state?.fieldErrors && (
+            <div className='text-sm bg-green-500 rounded-xl p-3 flex flex-row justify-center items-center gap-2'>
+              <CheckCircleIcon className='h-6 w-6 text-white font-bold' />
+              <div className='text-white font-bold'>Welcome Back!</div>
+            </div>
+          )}
         </form>
       </div>
     </main>
