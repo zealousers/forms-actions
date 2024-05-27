@@ -37,7 +37,7 @@ export default function FormInput({
           placeholder={placeholder}
           required
           minLength={minLength}
-          className=' text-black bg-white placeholder:text-neutral-300 border-none placeholder:text-sm placeholder:font-light text-lg outline-none invalid:bg-white autofill:shadow-inner'
+          className=' text-black bg-white placeholder:text-neutral-300 border-none placeholder:text-sm placeholder:font-light text-lg outline-none autofill:bg-yellow-200'
         />
       </div>
       {errors.map((error, i) => (
