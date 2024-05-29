@@ -1,63 +1,34 @@
-"use client";
-
-import { useFormState } from "react-dom";
-import { BugAntIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
-import { handleForm } from "./actions";
-import FormButton from "@/components/form-button";
-import FormInput from "@/components/form-input";
-import { PASSWORD_MIN_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/constants";
-import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
-  const [state, action] = useFormState(handleForm, null);
-  const [buttonClicked, setButtonClicked] = useState(false);
-
-  const handleClick = () => {
-    setButtonClicked(true);
-  };
   return (
-    <main className='min-h-screen w-screen flex flex-col items-center justify-center'>
-      <div className='min-w-1/6 flex flex-col items-center justify-center shadow-md rounded-lg border-neutral-200 border p-10'>
-        <BugAntIcon className='w-24 h-24 text-pink-500 mb-10' />
-        <form action={action} className=' w-full flex flex-col justify-center gap-4'>
-          <FormInput
-            type='email'
-            name='email'
-            id='email'
-            iconName='EnvelopeIcon'
-            required
-            placeholder='Enter your email'
-            errors={state?.fieldErrors.email}
-          />
-          <FormInput
-            type='text'
-            name='username'
-            id='username'
-            iconName='UserIcon'
-            required
-            placeholder='Enter your username'
-            errors={state?.fieldErrors.username}
-            minLength={USERNAME_MIN_LENGTH}
-          />
-          <FormInput
-            type='password'
-            name='password'
-            id='password'
-            iconName='KeyIcon'
-            required
-            placeholder='Enter your password'
-            errors={state?.fieldErrors.password}
-            minLength={PASSWORD_MIN_LENGTH}
-          />
-          <FormButton title='Log in' onClick={handleClick} />
-          {buttonClicked && !state?.fieldErrors && (
-            <div className='text-sm bg-green-500 rounded-xl p-3 flex flex-row justify-center items-center gap-2'>
-              <CheckCircleIcon className='h-6 w-6 text-white font-bold' />
-              <div className='text-white font-bold'>Welcome Back!</div>
-            </div>
-          )}
-        </form>
+    <div className='h-screen flex items-center justify-center'>
+      <div className='flex flex-col items-center justify-center border-1 rounded-xl border-neutral-100 p-10 shadow-lg gap-5'>
+        <div>
+          <Image src='/logo.png' alt='logo' width={200} height={200} />
+          <h2 className='font-bold text-xl'>안녕하세요. 반갑습니다!!</h2>
+          <h4 className='text-lg'>들어가시죠 :)</h4>
+        </div>
+        <div className='w-full mt-20 flex flex-col items-start justify-center'>
+          <div className=''>이미 계정이 있나요?</div>
+          <Link
+            className='w-full rounded-xl transition bg-pink-400 hover:bg-purple-400 font-bold text-white text-center px-3 py-1'
+            href={"/login"}
+          >
+            로그인
+          </Link>
+        </div>
+        <div className='w-full flex flex-col items-start justify-center'>
+          <div>계정이 없나요?</div>
+          <Link
+            className='w-full rounded-xl transition bg-blue-400 hover:bg-sky-400 font-bold text-white text-center px-3 py-1'
+            href={"/create-account"}
+          >
+            회원가입
+          </Link>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

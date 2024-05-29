@@ -2,7 +2,7 @@
 import { useFormStatus } from "react-dom";
 interface FormButtonProps {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export default function FormButton({ title, onClick }: FormButtonProps) {
