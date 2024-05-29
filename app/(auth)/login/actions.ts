@@ -55,7 +55,8 @@ export async function handleForm(prevState:any,formData:FormData) {
  const ok= await bcrypt.compare(result.data.password,user?.password ??"")
  if(ok){
   const session=await getSession()
-  session.id=user?.id
+  session.id=user!.id
+  await session.save()
   redirect("/profile")
  } else{
   return {

@@ -3,41 +3,53 @@ import {EMAIL_REQUIRED_ERROR,  EMAIL_UNIQUE_ERROR,  PASSWORD_CONFORM_ERROR,  PAS
 import {z} from "zod";
 import db from "@/lib/db"
 import bcrypt from "bcrypt";
-import { cookies } from "next/headers";
-import { getIronSession } from "iron-session";
 import {redirect} from "next/navigation"
 import getSession from "@/lib/session";
 
 const checkPassword=({password,confirm_password}:{password:string,confirm_password:string})=>password===confirm_password
 
-const checkEmailUnique=async (email:string)=>{
-  const user = await db.user.findFirst({
-    where:{
-      email,
-    },
-    select:{
-      id:true
-    }
-  }); 
-  return !Boolean(user)
-}
-const checkUserUnique=async (username:string)=>{
-  const user = await db.user.findFirst({
-    where:{
-      username:username,
-    },
-    select:{
-      id:true
-    }
-  });
-  return !Boolean(user)}
-
 const UserSchema = z.object({
-  email: z.string({required_error:EMAIL_REQUIRED_ERROR}).email().toLowerCase().refine(checkEmailUnique,EMAIL_UNIQUE_ERROR),
-  username: z.string({required_error:USERNAME_REQUIRED_ERROR}).trim().min(5, USERNAME_MIN_ERROR).refine(checkUserUnique,USERNAME_UNIQUE_ERROR),
+  email: z.string({required_error:EMAIL_REQUIRED_ERROR}).email().toLowerCase(),
+  username: z.string({required_error:USERNAME_REQUIRED_ERROR}).trim().min(5, USERNAME_MIN_ERROR),
   password: z.string({required_error:PASSWORD_REQUIRED_ERROR}).min(PASSWORD_MIN_LENGTH,PASSWORD_MIN_ERROR).regex(PASSWORD_REGEX,PASSWORD_REGEX_ERROR),
   confirm_password: z.string().min(PASSWORD_MIN_LENGTH,PASSWORD_MIN_ERROR).regex(PASSWORD_REGEX,PASSWORD_REGEX_ERROR),
-})
+}).superRefine(async ({ email }, ctx) => {
+    const user = await db.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      ctx.addIssue({
+        code: "custom",
+        message: EMAIL_UNIQUE_ERROR,
+        path: ["email"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  }) .superRefine(async ({ username }, ctx) => {
+    const user = await db.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      ctx.addIssue({
+        code: "custom",
+        message: USERNAME_UNIQUE_ERROR,
+        path: ["username"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  })
   .refine(checkPassword,{message:PASSWORD_CONFORM_ERROR,path:["confirm_password"]});
   
 export async function CheckForm(prevState:any,formData:FormData) {
