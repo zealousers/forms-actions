@@ -3,6 +3,7 @@ import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { notFound, redirect } from "next/navigation";
 import { EnvelopeIcon, UserIcon } from "@heroicons/react/24/solid";
+import logOut from "@/lib/logout";
 
 async function getUser() {
   const session = await getSession();
@@ -21,12 +22,13 @@ async function getUser() {
 
 export default async function Profile() {
   const user = await getUser();
-  const logOut = async () => {
-    "use server";
-    const session = await getSession();
-    session.destroy();
-    redirect("/");
-  };
+  // const logOut = async () => {
+  //   "use server";
+  //   const session = await getSession();
+  //   session.destroy();
+  //   redirect("/");
+  // };
+
   return (
     <main className='min-h-screen w-screen flex flex-col items-center justify-center'>
       <div className='text-4xl font-bold'>Welcome!</div>

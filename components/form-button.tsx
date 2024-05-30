@@ -10,7 +10,7 @@ export default function FormButton({ title, onClick }: FormButtonProps) {
   return (
     <button
       disabled={pending}
-      className='form-btn-able form-btn-disabled rounded-full  p-3 shadow-md text-white font-medium transition'
+      className='form-btn-able hover:form-btn-hover  form-btn-disabled rounded-full  p-3 shadow-md text-white font-medium transition'
       onClick={onClick}
     >
       {pending ? "Loading..." : title}

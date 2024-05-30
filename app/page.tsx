@@ -1,34 +1,50 @@
-import Image from "next/image";
+import db from "@/lib/db";
 import Link from "next/link";
 
-export default function Home() {
+interface Tweet {
+  id: number;
+  tweet: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+async function getTweets() {
+  const tweets = await db.tweet.findMany({
+    select: {
+      id: true,
+      tweet: true,
+      createdAt: true,
+      updatedAt: true,
+      user: true,
+    },
+  });
+  return tweets;
+}
+export default async function Main() {
+  const tweets = await getTweets();
   return (
-    <div className='h-screen flex items-center justify-center'>
-      <div className='flex flex-col items-center justify-center border-1 rounded-xl border-neutral-100 p-10 shadow-lg gap-5'>
-        <div>
-          <Image src='/logo.png' alt='logo' width={200} height={200} />
-          <h2 className='font-bold text-xl'>안녕하세요. 반갑습니다!!</h2>
-          <h4 className='text-lg'>들어가시죠 :)</h4>
-        </div>
-        <div className='w-full mt-20 flex flex-col items-start justify-center'>
-          <div className=''>이미 계정이 있나요?</div>
-          <Link
-            className='w-full rounded-xl transition bg-pink-400 hover:bg-purple-400 font-bold text-white text-center px-3 py-1'
-            href={"/login"}
-          >
-            로그인
+    <div className='h-screen flex flex-col justify-start'>
+      {tweets.map((tweet, index) => {
+        const date = new Date(tweet.createdAt);
+        const formattedDate = `${date.getFullYear()}년 ${
+          date.getMonth() + 1
+        }월 ${date.getDate()}일 ${
+          ["일", "월", "화", "수", "목", "금", "토"][date.getDay()]
+        }요일 ${date.getHours()}시 ${date.getMinutes()}분`;
+
+        return (
+          <Link key={tweet.id} href={`/tweets/${tweet.id}`} className='mx-auto flex-col gap-2 mb-5'>
+            <div className='flex flex-row items-end justify-between gap-2'>
+              {/* <span className='font-bold'>{(index + 1).toString().padStart(2, "0")}</span> */}
+              <span className='font-bold'>{index.toString()}</span>
+              <span className='font-medium'>{tweet.user.email}</span>
+              <span className='text-xs'>{formattedDate}</span>
+            </div>
+            <div className='w-96 truncate ... border border-neutral-200 p-3 rounded-md'>
+              {tweet.tweet}
+            </div>
           </Link>
-        </div>
-        <div className='w-full flex flex-col items-start justify-center'>
-          <div>계정이 없나요?</div>
-          <Link
-            className='w-full rounded-xl transition bg-blue-400 hover:bg-sky-400 font-bold text-white text-center px-3 py-1'
-            href={"/create-account"}
-          >
-            회원가입
-          </Link>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 }

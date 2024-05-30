@@ -5,7 +5,6 @@ interface SessionContent {
   id?: number;
 }
 
-
 export default function getSession(){
   return getIronSession<SessionContent>(cookies(),{
       cookieName:"cookie-carrot",
