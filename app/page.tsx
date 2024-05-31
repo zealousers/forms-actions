@@ -1,50 +1,47 @@
-import db from "@/lib/db";
+"use client";
 import Link from "next/link";
+import { getTweets } from "./actions";
+import { korFormatDate } from "@/lib/utils";
+import ListTweets from "@/components/list-tweets";
+import { useState, useEffect } from "react";
+import { Tweet } from "@prisma/client";
+import FormButton from "@/components/form-button";
 
-interface Tweet {
-  id: number;
-  tweet: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-async function getTweets() {
-  const tweets = await db.tweet.findMany({
-    select: {
-      id: true,
-      tweet: true,
-      createdAt: true,
-      updatedAt: true,
-      user: true,
-    },
-  });
-  return tweets;
-}
-export default async function Main() {
-  const tweets = await getTweets();
+export default function Tweets() {
+  // const tweets = await getTweets();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tweets, setTweets] = useState([]);
+  const itemsPerPage = 5; // 원하는 페이지당 항목 수를 설정합니다.
+
+  useEffect(() => {
+    const fetchTweets = async () => {
+      const data = await getTweets();
+      setTweets(data);
+    };
+
+    fetchTweets();
+  }, [currentPage]);
+  const currentItems = tweets.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
   return (
-    <div className='h-screen flex flex-col justify-start'>
-      {tweets.map((tweet, index) => {
-        const date = new Date(tweet.createdAt);
-        const formattedDate = `${date.getFullYear()}년 ${
-          date.getMonth() + 1
-        }월 ${date.getDate()}일 ${
-          ["일", "월", "화", "수", "목", "금", "토"][date.getDay()]
-        }요일 ${date.getHours()}시 ${date.getMinutes()}분`;
-
-        return (
-          <Link key={tweet.id} href={`/tweets/${tweet.id}`} className='mx-auto flex-col gap-2 mb-5'>
-            <div className='flex flex-row items-end justify-between gap-2'>
-              {/* <span className='font-bold'>{(index + 1).toString().padStart(2, "0")}</span> */}
-              <span className='font-bold'>{index.toString()}</span>
-              <span className='font-medium'>{tweet.user.email}</span>
-              <span className='text-xs'>{formattedDate}</span>
-            </div>
-            <div className='w-96 truncate ... border border-neutral-200 p-3 rounded-md'>
-              {tweet.tweet}
-            </div>
-          </Link>
-        );
-      })}
+    <div className='h-screen flex flex-col justify-start mt-36'>
+      {currentItems.map((tweetContent, index) => (
+        <ListTweets key={index} {...tweetContent} />
+      ))}
+      <div className='flex flex-row gap-4 items-center justify-center'>
+        <FormButton title='이전 페이지' onClick={handlePrevPage} />
+        <FormButton title='다음 페이지' onClick={handleNextPage} />
+      </div>
+      {/* <button onClick={handlePrevPage}>이전 페이지</button>
+      <button onClick={handleNextPage}>다음 페이지</button> */}
     </div>
   );
 }
