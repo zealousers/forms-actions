@@ -31,15 +31,7 @@ export async function handleForm(prevState:any,formData:FormData) {
     password:formData.get("password"),
     }
     const result=await UserSchema.safeParseAsync(data)
-   
-    // console.log(result)
- 
-  // if (!result.success) {
-  //   console.log(result.error.flatten());
-  //   return result.error.flatten();
-  // } else {
-  //   console.log(result.data);
-  // }
+
   if (!result.success) { 
     return result.error.flatten();
   } else {

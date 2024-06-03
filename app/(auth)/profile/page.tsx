@@ -22,12 +22,6 @@ async function getUser() {
 
 export default async function Profile() {
   const user = await getUser();
-  // const logOut = async () => {
-  //   "use server";
-  //   const session = await getSession();
-  //   session.destroy();
-  //   redirect("/");
-  // };
 
   return (
     <main className='min-h-screen w-screen flex flex-col items-center justify-center'>

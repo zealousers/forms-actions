@@ -18,7 +18,6 @@ export async function middleware(req:NextRequest){
   const exists = publicOnlyUrls[req.nextUrl.pathname];
   if(!session.id){
     if(!exists){
-      // return NextResponse.redirect(new URL("/home",req.url))
       return NextResponse.redirect(new URL("/home",req.url))
     } 
   } else {
@@ -29,5 +28,5 @@ export async function middleware(req:NextRequest){
 }
 
 export const config ={
-  matcher:["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher:["/((?!api|_next/static|_next/image|images|logo|favicon.ico).*)"],
 }

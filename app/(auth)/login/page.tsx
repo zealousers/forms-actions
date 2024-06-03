@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { BugAntIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { BugAntIcon } from "@heroicons/react/24/outline";
 import { handleForm } from "./actions";
 import FormButton from "@/components/form-button";
 import FormInput from "@/components/form-input";

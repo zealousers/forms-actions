@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 async function getTweetDetail(id: number) {
   const tweets = await db.tweet.findUnique({
     where: {
-      id: id, // Assuming 'id' is available in this scope
+      id: id,
     },
     select: {
       id: true,

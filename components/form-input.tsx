@@ -1,5 +1,4 @@
 import { EnvelopeIcon, KeyIcon, UserIcon } from "@heroicons/react/24/solid";
-import { InputHTMLAttributes } from "react";
 
 interface FormInputProps {
   errors?: string[];

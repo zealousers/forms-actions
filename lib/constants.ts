@@ -1,4 +1,3 @@
-import { z } from "zod";
 
 export const PASSWORD_MIN_LENGTH = 10;
 export const USERNAME_MIN_LENGTH = 5;
