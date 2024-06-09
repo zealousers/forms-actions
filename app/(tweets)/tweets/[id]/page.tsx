@@ -8,7 +8,7 @@ import { unstable_cache as nextCache } from "next/cache";
 import getSession from "@/lib/session";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import ButtonLike from "@/components/button-like";
-import AddComment from "../add-comment/page";
+import AddComment from "../add-comment/add-comment";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   return {

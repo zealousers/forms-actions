@@ -1,7 +1,6 @@
 "use client";
 
 import ButtonForm from "@/components/button-form";
-import Link from "next/link";
 import { useFormState } from "react-dom";
 import LoginUser from "@/components/login-user";
 import { CreateComment } from "./actions";
