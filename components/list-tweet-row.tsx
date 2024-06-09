@@ -14,7 +14,7 @@ interface TweetProps {
   user?: User;
 }
 
-export default function ListTweets({ id, tweet, createdAt, user }: TweetProps) {
+export default function ListTweetRow({ id, tweet, createdAt, user }: TweetProps) {
   const date = new Date(createdAt);
   const formattedDate = korFormatDate(date);
 

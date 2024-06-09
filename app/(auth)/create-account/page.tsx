@@ -1,6 +1,6 @@
 "use client";
 
-import FormButton from "@/components/form-button";
+import ButtonForm from "@/components/button-form";
 import FormInput from "@/components/form-input";
 import { useFormState } from "react-dom";
 import { CheckForm } from "./actions";
@@ -52,7 +52,7 @@ export default function CreateAccount() {
           errors={state?.fieldErrors.confirm_password}
           minLength={PASSWORD_MIN_LENGTH}
         />
-        <FormButton title='회원가입' />
+        <ButtonForm title='회원가입' />
       </form>
     </main>
   );

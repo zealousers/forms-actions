@@ -1,10 +1,11 @@
 "use client";
 import { getTweets } from "./actions";
-import ListTweets from "@/components/list-tweets";
+import ListTweetRow from "@/components/list-tweet-row";
 import { useState, useEffect } from "react";
 import { Tweet } from "@prisma/client";
-import FormButton from "@/components/form-button";
-import AddTweet from "@/components/add-tweet";
+import ButtonForm from "@/components/button-form";
+import ButtonLogOut from "@/components/button-logout";
+import ButtonLink from "@/components/button-link";
 
 export default function Tweets() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,15 +31,17 @@ export default function Tweets() {
   };
 
   return (
-    <div className='h-screen flex flex-col  items-stretch mt-10 w-1/2 mx-auto'>
-      {/* <FormButton title='트윗 작성' onClick={createTweet} /> */}
-      <AddTweet />
+    <div className='h-screen flex flex-col items-stretch mt-10 w-1/2 mx-auto'>
+      <div className='flex flex-row gap-2 justify-center items-center mb-5'>
+        <ButtonLink url='/tweets/add-tweet' name='트위작성' />
+        <ButtonLogOut />
+      </div>
       {currentItems.map((tweetContent) => (
-        <ListTweets key={tweetContent.id} {...tweetContent} />
+        <ListTweetRow key={tweetContent.id} {...tweetContent} />
       ))}
       <div className='flex flex-row gap-4 items-center justify-center'>
-        <FormButton title='이전 페이지' onClick={handlePrevPage} />
-        <FormButton title='다음 페이지' onClick={handleNextPage} />
+        <ButtonForm title='이전 페이지' onClick={handlePrevPage} />
+        <ButtonForm title='다음 페이지' onClick={handleNextPage} />
       </div>
     </div>
   );

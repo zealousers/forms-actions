@@ -1,4 +1,4 @@
-import FormButton from "@/components/form-button";
+import ButtonForm from "@/components/button-form";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { notFound, redirect } from "next/navigation";
@@ -37,7 +37,7 @@ export default async function Profile() {
           <div className='text-xl font-bold'>user-name : {user?.username}</div>
         </div>
         <form className='mx-auto w-full flex flex-col mt-10' action={logOut}>
-          <FormButton title='Log out' />
+          <ButtonForm title='Log out' />
         </form>
       </div>
     </main>

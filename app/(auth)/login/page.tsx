@@ -3,7 +3,7 @@
 import { useFormState } from "react-dom";
 import { BugAntIcon } from "@heroicons/react/24/outline";
 import { handleForm } from "./actions";
-import FormButton from "@/components/form-button";
+import ButtonForm from "@/components/button-form";
 import FormInput from "@/components/form-input";
 import { PASSWORD_MIN_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/constants";
 
@@ -34,7 +34,7 @@ export default function Login() {
             errors={state?.fieldErrors.password}
             minLength={PASSWORD_MIN_LENGTH}
           />
-          <FormButton title='Log in' />
+          <ButtonForm title='Log in' />
         </form>
       </div>
     </main>

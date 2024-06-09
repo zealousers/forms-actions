@@ -8,6 +8,7 @@ export async function getTweets(): Promise<Tweet[]> {
     select: {
       id: true,
       tweet: true,
+      view: true,
       createdAt: true,
       updatedAt: true,      
       userId: true,
@@ -16,9 +17,15 @@ export async function getTweets(): Promise<Tweet[]> {
           email: true, 
         },
       },
+      _count: {
+        select: {
+          like: true,
+          comment: true,
+        },
+      },
     },
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
   });
   return tweets;
