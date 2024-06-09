@@ -3,7 +3,7 @@
 import ButtonForm from "@/components/button-form";
 import { useFormState } from "react-dom";
 import LoginUser from "@/components/login-user";
-import { CreateComment } from "@/components/add-comment/actions";
+import { CreateComment } from "./actions";
 
 interface AddCommentProps {
   tweetId: number;

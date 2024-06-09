@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { korFormatToTimeAgo } from "@/lib/utils";
 import ButtonLink from "@/components/button-link";
 import ButtonLogOut from "@/components/button-logout";
-import CommentsListViews from "../comments-list-view/comment-list-view";
+import CommentsListViews from "@/components/comments-list-view/comment-list-view";
 import { unstable_cache as nextCache } from "next/cache";
 import getSession from "@/lib/session";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import ButtonLike from "@/components/button-like";
-import AddComment from "../add-comment/add-comment";
+import AddComment from "@/components/add-comment/add-comment";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   return {
