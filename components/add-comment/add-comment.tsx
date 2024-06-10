@@ -9,7 +9,7 @@ interface AddCommentProps {
   tweetId: number;
 }
 
-export default function AddComment({ tweetId }: AddCommentProps) {
+export default async function AddComment({ tweetId }: AddCommentProps) {
   // const [state, action] = useFormState(CreateComment, null);
   return (
     <div className="flex flex-col items-center justify-center w-full mx-auto">

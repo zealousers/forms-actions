@@ -6,7 +6,7 @@ import { useFormState } from "react-dom";
 import LoginUser from "@/components/login-user";
 import { CreateTweet } from "./actions";
 
-export default function AddTweet() {
+export default async function AddTweet() {
   // const [state, action] = useFormState(CreateTweet, null);
   return (
     <main className="flex flex-col items-center justify-center h-screen w-1/2 mx-auto">
