@@ -1,4 +1,5 @@
 // "use client";
+"use server";
 import ButtonForm from "@/components/button-form";
 import Link from "next/link";
 import { useFormState } from "react-dom";

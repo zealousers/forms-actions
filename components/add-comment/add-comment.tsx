@@ -1,5 +1,5 @@
 // "use client";
-
+"use server";
 import ButtonForm from "@/components/button-form";
 // import { useFormState } from "react-dom";
 import LoginUser from "@/components/login-user";
