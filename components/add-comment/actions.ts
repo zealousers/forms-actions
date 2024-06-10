@@ -9,7 +9,7 @@ const commentSchema = z.object({
 });
 
 
-export async function CreateComment(prevState:any,formData:FormData){
+export async function CreateComment(formData:FormData){
   const data={
     comment:formData.get("comment"),
     userId:formData.get("userId"),   

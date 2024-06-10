@@ -9,7 +9,7 @@ const tweetSchema = z.object({
 });
 
 
-export async function CreateTweet(prevState:any,formData:FormData){
+export async function CreateTweet(formData:FormData){
   const data={
     tweet:formData.get("tweet"),
     userId:formData.get("userId"),   
@@ -42,7 +42,4 @@ export async function CreateTweet(prevState:any,formData:FormData){
           }
       redirect("/")
       }
-
-// tweetSchema.parse(data);
-// console.log('tweetSchema.parse(data) :', tweetSchema.parse(data));
 }
